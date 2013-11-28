@@ -1,0 +1,8 @@
+extend ./layout
+block content
+	.video
+		- for (var i =0; i < youku.length; i++)
+			- var item=youku[i]
+			.item
+				a(href='#{item.href}',title='#{item.title}')
+					img(src='#{item.img}',alt='#{item.title}')
