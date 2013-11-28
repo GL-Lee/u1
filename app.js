@@ -40,3 +40,20 @@ app.get('/video', function(req, res){
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+http.get("http://www.youku.com", function(res) {
+  console.log("Got response: " + res.statusCode);
+    var st = fs.open("test.txt","w",0644); 
+    res.on('data', function (chunk) {
+		    fs.write(st,chunk,0,'utf8',function(e){
+		        if(e) throw e;
+		        // fs.closeSync(fd);
+		    })
+  }).on('end', function(){
+  	if(st){
+  		fs.closeSync(st);
+  	}
+  });
+}).on('error', function(e) {
+  console.log("Got error: " + e.message);
+});
