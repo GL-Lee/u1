@@ -11,6 +11,7 @@ var http = require('http');
 var path = require('path');
 var fs=require('fs');
 var app = express();
+var $ = require('jquery');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -43,17 +44,22 @@ http.createServer(app).listen(app.get('port'), function(){
 
 http.get("http://www.youku.com", function(res) {
   console.log("Got response: " + res.statusCode);
-    var st = fs.open("test.txt","w",0644); 
-    res.on('data', function (chunk) {
-		    fs.write(st,chunk,0,'utf8',function(e){
-		        if(e) throw e;
-		        // fs.closeSync(fd);
-		    })
-  }).on('end', function(){
-  	if(st){
-  		fs.closeSync(st);
-  	}
-  });
+  	var content = '';
+	res.on('data', function (chunk) {
+		content+=chunk.toString();
+	}).on('end', function(){
+		var con = $(content).find("a").attr("title").jion(":");
+		fs.writeFile('message.txt', con, function (err) {
+		  if (err) throw err;
+		  console.log('It\'s saved!');
+		});
+	 //    fs.open("test.txt","w",0644,function(e,fd){
+		//     fs.write(fd,content,0,content.length,0,function(e){
+		//         if(e) throw e;
+		//         fs.closeSync(fd);
+		//     })
+		// })
+	})
 }).on('error', function(e) {
   console.log("Got error: " + e.message);
 });
