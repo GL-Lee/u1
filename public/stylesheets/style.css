@@ -14,3 +14,11 @@ a {
 	display: inline;
 	padding: 10px;
 }
+#content .item a{
+	width: 200px;
+	height: 110px;
+	display: inline-block;
+}
+#content .item img{
+	width: 100%;
+}

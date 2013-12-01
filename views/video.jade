@@ -6,3 +6,8 @@ block content
 			.item
 				a(href='#{item.href}',title='#{item.title}')
 					img(src='#{item.img}',alt='#{item.title}')
+		- for (var i =0; i < tudou.length; i++)
+			- var item=tudou[i]
+			.item
+				a(href='#{item.href}',title='#{item.title}')
+					img(src='#{item.img}',alt='#{item.title}')
