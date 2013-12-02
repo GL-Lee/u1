@@ -1,13 +1,17 @@
 extend ./layout
 block content
 	.video
-		- for (var i =0; i < youku.length; i++)
-			- var item=youku[i]
-			.item
-				a(href='#{item.href}',title='#{item.title}')
-					img(src='#{item.img}',alt='#{item.title}')
-		- for (var i =0; i < tudou.length; i++)
-			- var item=tudou[i]
-			.item
-				a(href='#{item.href}',title='#{item.title}')
-					img(src='#{item.img}',alt='#{item.title}')
+		.youku
+			.title youku
+			- for (var i =0; i < youku.length; i++)
+				- var item=youku[i]
+				.item
+					a(href='#{item.href}',title='#{item.title}', target='_blank')
+						img(src='#{item.img}',alt='#{item.title}')
+		.tudou
+			.title tudou
+			- for (var i =0; i < tudou.length; i++)
+				- var item=tudou[i]
+				.item
+					a(href='#{item.href}',title='#{item.title}', target='_blank')
+						img(src='#{item.img}',alt='#{item.title}')

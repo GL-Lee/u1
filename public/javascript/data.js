@@ -24,23 +24,21 @@ exports.saveData = function(){
 	var $ = require('jquery');
 	var iconv = require('iconv-lite');
 	var rules = {};
-	var content = {};
 	rules.youku = require(rulesDir+'/youku.com').youku;
 	rules.tudou = require(rulesDir+'/tudou.com').tudou;
-	for(var rule in rules){
-		var s = rules[rule];
-		content[rule] = new Buffer(1021*1024*8);
-		http.get(s.url, function(req,res) {
-		 	console.log("Now site: " + req.url);
-		 	var contentFile = dataDir+'/content/'+rule+'.json' ;
+	function saveSite(site){
+		var s = rules[site];
+		var content = new Buffer(1021*1024*8);
+		http.get(s.url, function(res) {
+		 	console.log("Now site: " + s.url);
+		 	var contentFile = dataDir+'/content/'+site+'.json' ;
 		  	var len =1;
 			res.on('data', function (chunk) {
-				console.log("rule:",rule);
-				chunk.copy(content[rule] ,len - 1);
+				chunk.copy(content ,len - 1);
 				len += chunk.length;
 			}).on('end', function(){
 				console.log(s.charset);
-				var html = iconv.fromEncoding(content[rule] , s.charset);
+				var html = iconv.fromEncoding(content , s.charset);
 				var data = [];
 				var $html = $(html);
 				var charset = $html.find("meta[charset=]").attr("charset");
@@ -52,7 +50,6 @@ exports.saveData = function(){
 					d.title = a.attr('title');
 					d.href = a.attr('href');
 					d.img = img.attr('src');
-					console.log('charset:'+charset);
 					data.push(d);
 				});
 				data = JSON.stringify(data);
@@ -63,5 +60,10 @@ exports.saveData = function(){
 			})
 		}).on('error', function(e) {
 		  console.log("Got error: " + e.message);
-	});}
+		});
+	}
+
+	for(var rule in rules){
+		saveSite(rule);
+	}
 }
