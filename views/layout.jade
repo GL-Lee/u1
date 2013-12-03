@@ -4,11 +4,12 @@ html
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
+		- var channels = [ '视频', '新闻', '体育' ]
 		.nav
-			p
-				a(href='#') video
-				a(href='#') news
-				a(href='#') sports
+			ul
+				-for(var i = 0; i < channels.length; i++)
+					li
+						a(href='#')=channels[i]
 		#content
 			block content
 		.footer

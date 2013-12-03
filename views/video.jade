@@ -2,14 +2,18 @@ extend ./layout
 block content
 	.video
 		.youku
-			.title youku
+			.title
+				a(href='http://www.youku.com',target='_blank')
+					img(src='/image/yklogo.png')
 			- for (var i =0; i < youku.length; i++)
 				- var item=youku[i]
 				.item
 					a(href='#{item.href}',title='#{item.title}', target='_blank')
 						img(src='#{item.img}',alt='#{item.title}')
 		.tudou
-			.title tudou
+			.title
+				a(href='http://www.tudou.com',target='_blank')
+					img(src='/image/tdlogo.png')
 			- for (var i =0; i < tudou.length; i++)
 				- var item=tudou[i]
 				.item
